@@ -1,6 +1,6 @@
 def input_students
   puts "For each student, please enter the name and then the cohort"
-  puts "To finish, just hit return thrice"
+  puts "To finish, just hit enter without entering a name"
   students =[]
   puts "Enter name: "
   name = gets.chomp
@@ -38,7 +38,11 @@ def print(students)
   }
 end
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(40)
+  if students.count == 1
+    puts "Overall, we have 1 great student".center(40)
+  else
+    puts "Overall, we have #{students.count} great students".center(40)
+  end
 end
 
 students = input_students
