@@ -33,9 +33,13 @@ def print_header
   puts "-------------".center(40)
 end
 def print(students)
-  students.each_with_index { |student, index| 
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
-  }
+  if students.count > 0
+    students.each_with_index { |student, index| 
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)".center(40)
+    }
+  else
+    puts "There are no students in this cohort."
+  end
 end
 def print_footer(students)
   if students.count == 1
