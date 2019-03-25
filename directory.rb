@@ -6,14 +6,24 @@ def input_students
   name = gets.chomp
   puts "Enter cohort: "
   cohort = gets.chomp
+  if cohort.empty?
+    cohort = "Uknown"
+  end
 
   while !name.empty? do
     students << {name: name, cohort: cohort}
     puts "Now we have #{students.count} student(s)"
     puts "Enter name: "
     name = gets.chomp
+    if name.empty? 
+      break
+    end
     puts "Enter cohort: "
     cohort = gets.chomp
+    if cohort.empty?
+      cohort = "Uknown"
+    end
+    
   end
   students
 end
