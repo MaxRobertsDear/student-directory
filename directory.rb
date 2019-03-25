@@ -3,9 +3,9 @@ def input_students
   puts "To finish, just hit enter without entering a name"
   students =[]
   puts "Enter name: "
-  name = gets.chomp
+  name = gets.strip
   puts "Enter cohort: "
-  cohort = gets.chomp
+  cohort = gets.strip
   if cohort.empty?
     cohort = "Uknown"
   end
@@ -14,12 +14,12 @@ def input_students
     students << {name: name, cohort: cohort}
     puts "Now we have #{students.count} student(s)"
     puts "Enter name: "
-    name = gets.chomp
+    name = gets.strip
     if name.empty? 
       break
     end
     puts "Enter cohort: "
-    cohort = gets.chomp
+    cohort = gets.strip
     if cohort.empty?
       cohort = "Uknown"
     end
