@@ -3,7 +3,7 @@
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -11,6 +11,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list of students from students.csv"
   puts "9. Exit"
 end
 
@@ -28,6 +29,8 @@ def process(selection)
     show_students
   when "3" 
     save_students
+  when "4"
+    load_students
   when "9"
     exit # this will cause the programme to terminate
   else
@@ -47,14 +50,35 @@ def save_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first 
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else 
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 def input_students
   puts "For each student, please enter the name and then the cohort"
   puts "To finish, just hit enter without entering a name"
   
   puts "Enter name: "
-  name = gets.strip
+  name = STDIN.gets.strip
   puts "Enter cohort: "
-  cohort = gets.strip
+  cohort = STDIN.gets.strip
   if cohort.empty?
     cohort = "Uknown"
   end
@@ -63,16 +87,15 @@ def input_students
     @students << {name: name, cohort: cohort}
     puts "Now we have #{@students.count} student(s)"
     puts "Enter name: "
-    name = gets.strip
+    name = STDIN.gets.strip
     if name.empty? 
       break
     end
     puts "Enter cohort: "
-    cohort = gets.strip
+    cohort = STDIN.gets.strip
     if cohort.empty?
       cohort = "Uknown"
     end
-    
   end
   @students
 end
@@ -100,7 +123,5 @@ def print_footer
   end
 end
 
+try_load_students
 interactive_menu
-print_header
-print_student_list
-print_footer
